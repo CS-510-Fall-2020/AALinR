@@ -22,7 +22,7 @@ LA6 = LA6.norm %>% pivot_wider(names_from = RP, values_from = Loss) # , values_f
 
 LA6 = subset(LA6, select = c(1,2,4,5,6,7,8,3))
 LA6$`AAL`<-C.10.20*(LA6$`10`+LA6$`20`)+C.20.50*(LA6$`20`+LA6$`50`)+C.50.100*(LA6$`50`+LA6$`100`)+C.100.200*(LA6$`100`+LA6$`200`)+C.200.500*(LA6$`200`+LA6$`500`)
-ggplot(data = LA6.norm, mapping = aes(x=as.factor(RP), y=log(Loss), fill=as.factor(RP))) + geom_violin()
+ggplot(data = LA6.norm, mapping = aes(x=as.factor(RP), y=log(Loss), fill=as.factor(RP))) + geom_violin() # geom_point() # geom_contour
 
 # write.table(LA6, "dat\\LA6AAL.txt")
 # write.csv(LA6, "dat\\LA6.AAL.csv")
