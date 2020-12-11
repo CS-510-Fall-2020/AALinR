@@ -1,0 +1,4 @@
+References & Bibliography 
+Midpoint Rule & Rietmann Sums https://www.youtube.com/watch?v=5XreKMJDJsg
+Hazus: A standardized methodology for flood risk assessment in Canada; Todorov, N; Nastev, M https://www.tandfonline.com/doi/full/10.1080/07011784.2013.801599
+RECIPES FOR RESILIENCE: Benefits and Uses of Average Annualized Loss Estimates https://www.fema.gov/media-library-data/1517847673537-421fae1b26c320a86295f54d58226fb3/RVII_AverageAnnualizedLoss_Non-Technical_Factsheet_508.pdf
