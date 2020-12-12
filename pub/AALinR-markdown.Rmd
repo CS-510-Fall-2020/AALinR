@@ -1,9 +1,7 @@
 ---
-title: Uncertainty quantification reveals the physical constraints on pumping by peristaltic
-  hearts
-author: Lindsay D. Waldrop, Yanyan He, Nicholas A. Battista, Tess Neary Peterman,
-  Laura A. Miller
-date: "11/30/2020"
+title: Aveage Annualized Loss in R
+author: Niko T Todorov
+date: "12/07/2020"
 output:
   pdf_document: default
   html_document:
@@ -17,11 +15,37 @@ csl: journal-of-the-royal-society-interface.csl
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Abstract
+## Introduction
 
-Most biological functional systems are complex, and this complexity is a fundamental driver of diversity. Since input parameters interact in complex ways, a holistic understanding of functional systems is key to understanding how natural selection produces diversity. We present uncertainty quantification (UQ) as a quantitative analysis tool on computational models to study the interplay of complex systems and diversity. We investigate peristaltic pumping in a racetrack circulatory system using a computational model and analyze the impact of three input parameters (Womersley number, compression frequency, compression ratio) on flow and the energetic costs of circulation. We employed two models of peristalsis (one that allows elastic interactions between the heart tube and fluid and one that does not), to investigate the role of elastic interactions on model output. A computationally cheaper surrogate of the input parameter space was created with generalized polynomial chaos expansion to save computational resources. Sobol indices were then calculated based on the gPC expansion and model output. We found that all flow metrics were highly sensitive to changes in compression ratio and insensitive to Womersley number and compression frequency, consistent across models of peristalsis. Elastic interactions changed the patterns of parameter sensitivity for energetic costs between the two models, revealing that elastic interactions are likely a key physical metric of peristalsis. The UQ analysis created two hypotheses regarding diversity: favoring high flow rates (where compression ratio is large and highly conserved) and minimizing energetic costs (which avoids combinations of high compression ratios, high frequencies, and low Womersley numbers).
+FEMA collects natural hazards -- flood, hurricane, earthquake, tsunami -- for deterministic events -- such as Katrina, Sandy, Harvey hurricanes, Northridge earthquake to name a few -- and probabilistic from 10 year to 1000 year probability of occurance, which we will call return periods (RPs). This AALinR module assumes the existance of  several (more than 1) probabilistic data points, for the time being, in the predefined RPs [10, 25, 50, 100, 200, 500, 1000], but in the future extendable to any random RP. The import data in space-delimited format is: (ID RP Loss).
 
-## Introduction 
+The AALinR will produce the Average Annualized Loss using Riemann numerical integration midpoint method. 
+
+## Current assumptions
+
+- RPs must be one of [10, 20, 50, 100, 200, 500, 1000].
+- No missing RP or outlier data detection.
+
+## Future enhancements
+
+- Random RP losses.
+- missing, erroneous, outlier data detection/correction.
+
+
+
+## FAQ 
+
+Q: How is AAL different from the 1 return period (RP) loss?
+A: The AAL is the mean value of a loss exceedance probability (EP) distribution. It is the expected loss per year, averaged over many years. The one-year return period loss has 100% chance of occurance and is expected to be at least equaled every year.
+
+Q: What is the RP loss relationship w.r.t. the probability of occurance?
+A: The RP loss has inverse relationship w.r.t. probability of occurance. For example 100-year RP loss is said to equal 1/100 or 1% chance. Similarly, 10-year ~ 1/10 or 10% chance, 25-year ~ 1/25 or 4% chance, 500-year ~ 1/500 or 0.2% chance of occurance.
+
+Q: Why AAL? 
+A: because it is a good measure for relative natural hazards risk of a geographic area.
+
+Q: What is the ID? 
+A: it could be a Census Block (CB), Census Tract (CT), County (CO), State (ST), or individual buildings, for which may have to use Google Plus codes.
 
 ### Computational Modeling and Biodiversity
 
@@ -94,7 +118,7 @@ We constructed two-dimensional models of peristalsis in a heart tube which drive
 The models of peristalsis (presented in [@Waldrop:peristalsis]) were implemented using the immersed boundary method (IBM) and with the C++ library Immersed Boundary with Adaptive Mesh Refinement (IBAMR) [@Griffith:2014]. IBM allows a direct, numerical simulation of the Navier-Stokes equations of fluid flow interacting with flexible boundaries moving either freely or with preferred motion. IBAMR incorporates adaptive mesh refinement, which allows the Eulerian grid on which the Navier-Stokes equations are solved to be rougher away from the boundaries and finer close to boundaries to save computational resources. Additional details of the IBM are located in the supplemental information to this paper. 
 
 ```{r grid-fig, echo=FALSE, fig.cap="Racetrack model showing adaptive meshing. Full racetrack showing the $R_{top}$ and $R_{bot}$ used to generate prescribed motion in red and adaptive meshing of domain: roughest mesh (32 x 32 grid) in dark blue, intermediate mesh (16 x 16 grid) in teal, and finest mesh (8 x 8 grid) in gold, black box highlights inset a. Inset a: close up of region including part of the tube and racetrack showing meshes, black box highlights inset b. Inset b: close up of tube showing relation of finest mesh and target points of the racetrack. ", out.width = '100%'}
-knitr::include_graphics("figures/Figure1.png")
+knitr::include_graphics("../fig/Rplot.png")
 ```
 
 
@@ -152,7 +176,7 @@ library(grid)
 library(gridExtra)
 library(knitr)
 # Create Data frame with all data pulled from matlab figures for sine wave
-data<-read.csv("data/sobol_indices_2019-02-04.csv",header=TRUE)
+data<-read.csv("../dat/LA6.AAL.csv",header=TRUE)
 cbPalette1p <- c("#999999", "#c9c9c9","#E69F00", "#eec770","#56B4E9","#a7cfe5", "#009E73","#55c3a5","#CC79A7","#e2b1cc","#9345D5","#B689DC","#C70039","#CF7070")
 
 Qdata<-data[data$var=="Q",]
