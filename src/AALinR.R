@@ -46,7 +46,7 @@ LA6$`AAL`<-C.10.20*(LA6$`10`+LA6$`20`)
           +C.100.200*(LA6$`100`+LA6$`200`)
           +C.200.500*(LA6$`200`+LA6$`500`)
 ggplot(data <- LA6.norm, mapping <- aes(x<-as.factor(RP), y<-log(Loss), fill<-as.factor(RP))) + geom_violin() # geom_point() # geom_contour
-ggsave()
+ggsave(filename="fig\\LA6-AAL-hu.jpg")
 
 # write.table(LA6, "dat\\LA6AAL.txt")
 # write.csv(LA6, "dat\\LA6.AAL.csv")

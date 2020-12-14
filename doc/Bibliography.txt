@@ -1,4 +1,54 @@
 References & Bibliography 
-Midpoint Rule & Rietmann Sums https://www.youtube.com/watch?v=5XreKMJDJsg
-Hazus: A standardized methodology for flood risk assessment in Canada; Todorov, N; Nastev, M https://www.tandfonline.com/doi/full/10.1080/07011784.2013.801599
-RECIPES FOR RESILIENCE: Benefits and Uses of Average Annualized Loss Estimates https://www.fema.gov/media-library-data/1517847673537-421fae1b26c320a86295f54d58226fb3/RVII_AverageAnnualizedLoss_Non-Technical_Factsheet_508.pdf
+
+@article{HazCan:2013,
+	abstract = {While Canada is exposed to a variety of natural hazards, most risk and emergency managers presently lack the necessary tools and guidance to adequately undertake rigorous risk assessments. Recently, Natural Resources Canada (NRCan) has adopted Hazus, a standardized methodology for estimating potential losses from natural hazards developed by the US Federal Emergency Management Agency (FEMA, fema.gov/hazus) as one of the best practice methods for risk assessment. Hazus estimates potential losses from earthquakes, floods and hurricanes, and includes a hazard and inventory database needed to conduct baseline risk assessment studies. An agreement has been signed with FEMA to adapt and co-develop a harmonized North American version of the Hazus methodology. At the same time, collaboration has been initiated within the federal government between the departments of Natural Resources, Environment, Defence and Public Safety to promote widespread usage of Hazus among the full range of Canadian decision-makers. This article reports the typical features of the Canadian version of the Hazus flood module and summarizes ongoing activities and potential challenges in implementing this model in Canada. Bien que le Canada soit exposè à une variètè de risques naturels, la plupart des gestionnaires de risques et d’urgence n’ont actuellement pas les outils nècessaires et les conseils pour bien entreprendre des èvaluations rigoureuses des risques. Rècemment, Ressources naturelles Canada (RNCan) a adoptè Hazus, une mèthodologie standardisèe pour estimer les pertes potentielles liès aux alèas naturels mis au point par la US Federal Emergency Management Agency (FEMA,fema.gov/Hazus), comme l’une des meilleures mèthodes de pratiques pour l’èvaluation du risques. Hazus estime les pertes lièes aux tremblements de terre, aux inondations et aux ouragans, et comprend une base de donnèes inventoriant les alèas essentiels nècessaires pour mener des ètudes prèliminaires d’èvaluation du risque. Un accord a ètè signè avec la FEMA pour adapter et pour co-dèvelopper une version harmonisèe nord-amèricaine de la mèthodologie Hazus. En même temps, la collaboration a ètè initièe au sein du gouvernement fèdèral entre les ministères des Ressources naturelles, de l’Environnement, de la Dèfense et de la Sècuritè publique pour promouvoir l’utilisation gènèralisèe de Hazus parmi l’ensemble des dècideurs canadiens. Cet article prèsente les caractèristiques typiques de la version canadienne du modèle Flood Hazus et reprend les activitès en cours et les dèfis potentiels à la mise en œuvre de ce modèle au Canada.},
+	author = {Miroslav Nastev and Nikolay Todorov},
+	title = {Hazus: A standardized methodology for flood risk assessment in Canada},
+	journal = {Canadian Water Resources Journal / Revue canadienne des ressources hydriques},
+	volume = {38},
+	number = {3},
+	pages = {223-231},
+	year  = {2013},
+	publisher = {Taylor & Francis},
+	doi = {10.1080/07011784.2013.801599},
+	URL = {https://doi.org/10.1080/07011784.2013.801599},
+	eprint = {https://doi.org/10.1080/07011784.2013.801599}}
+
+@electronic{FEMArVII:2014,
+	author = {FEMA},
+	date-added = {2020-12-07 17:28:41 +0000},
+	date-modified = {2020-12-07 17:28:41 +0000},
+	lastchecked = {December 14, 2020},
+	title = {RECIPES FOR RESILIENCE: Benefits and Uses of Average Annualized Loss Estimates},
+	url = {https://www.fema.gov/media-library-data/1517847673537-421fae1b26c320a86295f54d58226fb3/RVII_AverageAnnualizedLoss_Non-Technical_Factsheet_508.pdf},
+	year = {2014}}
+
+
+@article{SchweitzerAndBerman,
+	author = {Tom Schweitzer and Eric Berman},
+	date-added = {2020-01-29 10:22:00 -0800},
+	date-modified = {2020-01-31 09:34:25 -0800},
+	title = {Hazus AAL Study},
+	url = {https://studylib.net/doc/5764137/hazus-aal-study},
+	year = {2014}}
+
+@electronic{Todorov:2020,
+	author = {Niko Todorov},
+	date-added = {2020-12-07 17:28:41 +0000},
+	date-modified = {2020-12-07 17:28:41 +0000},
+	lastchecked = {December 14, 2020},
+	title = {Average Annualized Loss in R (AALinR)},
+	url = {https://github.com/CS-510-Fall-2020/AALinR},
+	year = {2020},
+	Bdsk-Url-1 = {https://github.com/CS-510-Fall-2020/AALinR}}
+
+@electronic{RietmannMethod:2020,
+	author = {unknown},
+	date-added = {2020-12-07 17:28:41 +0000},
+	date-modified = {2020-12-07 17:28:41 +0000},
+	lastchecked = {December 14, 2020},
+	title = {Midpoint Rule & Rietmann Sums},
+	url = {https://www.youtube.com/watch?v=5XreKMJDJsg},
+	year = {2020},
+	Bdsk-Url-1 = {https://www.youtube.com/watch?v=5XreKMJDJsg}}
+
