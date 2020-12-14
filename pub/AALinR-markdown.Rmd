@@ -19,14 +19,23 @@ knitr::opts_chunk$set(echo = TRUE)
 
 FEMA collects natural hazards -- flood, hurricane, earthquake, tsunami -- for deterministic events -- such as Katrina, Sandy, Harvey hurricanes, Northridge earthquake to name a few -- and probabilistic from 10 year to 1000 year probability of occurrence, which we will call return periods (RPs). This AALinR module assumes the existence of  several (more than 1) probabilistic data points, for the time being, in the predefined RPs [10, 25, 50, 100, 200, 500, 1000], but in the future extendable to any random RP. The import data in space-delimited format is: (ID RP Loss) [@HazCan:2013]. The AAL is a valuable risk assessment tool that presents loss estimates in dollar values. In a hazard mitigation plan, the AAL can be used to improve the risk assessment, and to select, evaluate, and prioritize mitigation measures [@FEMArVII:2014].
 
-The AALinR [@Todorov:2020] will produce the Average Annualized Loss using Riemann numerical integration midpoint method [@RietmannMethod:2020]. 
 
 
 ## Methodology
 
 ### Computational Modeling
 
-The Flood Risk Report and Flood Risk Database include loss estimates from the Federal Emergency Management Agency (FEMA)’s Hazus model, presented as Average Annualized Loss (AAL) estimates expressed in dollar values. The estimates included in these products come from a nationwide model called Hazus, a Geographic Information Systems (GIS)-based planning tool that estimates structural, economic, and social losses resulting from flood, earthquake, and wind events. The information in the AAL can be used to identify floodprone areas, communicate flood risk, provide potential damage severity information for various flooding events, and identify possible locations for mitigation action. Pairing the AAL with local information helps enhance risk awareness and support mitigation planning efforts [@SchweitzerAndBerman]. 
+The AALinR [@Todorov:2020] largely following the catastrophe modeling practices computes the Average Annualized Loss using Riemann numerical integration midpoint method [@RietmannMethod:2020]. 
+
+The Natural Hazards Risk Report and Flood Risk Database include loss estimates from the Federal Emergency Management Agency (FEMA)’s Hazus model, presented as Average Annualized Loss (AAL) estimates expressed in dollar values. The estimates included in these products come from a nationwide model called Hazus, a Geographic Information Systems (GIS)-based planning tool that estimates structural, economic, and social losses resulting from flood, earthquake, hurricane and tsunami events. The information in the AAL can be used to identify natural hazards-prone areas, communicate that risk, provide potential damage severity information for various natural hazard events, and identify possible locations for mitigation action. Pairing the AAL with local information helps enhance risk awareness and support mitigation planning efforts [@SchweitzerAndBerman]. 
+
+Two datasets were selected for the AALinR [@Todorov:2020] prototype. 
+
+- *LA6* a suite of return period hurricane losses at Census Tract (CT) level for the six Louisiana parishes around New Orleans, namely: Saint Bernard, Saint Charles, Saint Tammany, Jefferson, Plaquemines, and New Orleans parishes (352 CTs, 2,816 CT RPs).
+
+- *NOLA* a suite of return period flood losses at Census Block (CB) level for the city of New Orleans, LA (5,064 CBs, 20,684 CB RPs).
+
+The AAL method calculates the Riemann midpoint sums, essentially performing numerical integration under the loss curve as defined by the provided return periods. Each return period loss is multiplied by the probability of occurrence of its return period. The sum of all products for the available return periods is the value for the AAL.
 
 ### Current assumptions
 
@@ -37,66 +46,32 @@ The Flood Risk Report and Flood Risk Database include loss estimates from the Fe
 
 - Random RP losses.
 - missing, erroneous, outlier data detection/correction.
-
-
- - *Morphology of the heart.* Parameters associated with morphology which possibly influence flow include the tube's relative resting diameter and length the mechanical properties of the myocardium and surrounding structures, and the resistivity of the circulatory system. These morphological features show variation among animals within the Chordata but the role of such features in functional performance is not well understood. 
- - *Kinematics of tube compression.* The frequency of compressions can have a complicated, non-linear relationship with flow speeds. Compression ratio, the percent occlusion of the tube, can affect flow speeds in non-linear ways. Feedback between the action potentials and mechanical properties of the myocardium also impact flow features.
- - *Size and scaling.* Fluid flow undergoes a critical transition between small sizes and speeds, where the viscosity of fluid damps out unsteady effects, to large sizes and speeds, where inertia is relatively more influential to the character of fluid flow than viscosity and unsteady effects are important. For pulsatile flow, a ratio between inertial and viscous forces is called the Womersley number ($Wo$) and helps to define the transition (at $Wo\approx1$):
-\begin{equation}
-Wo = d\sqrt{\frac{f \rho}{\mu}},
-\label{Wo}
-\end{equation}
-where $f$ is the frequency of the pulse, $d$ is the resting diameter of the tube, $\mu$ is fluid dynamic viscosity, and $\rho$ is fluid density. Embryonic vertebrates possess circulatory systems that grow through this transitional range with tubular hearts that transform into chambered hearts with valves during development. Other groups of animals explore size through evolutionary time, retaining a tubular heart throughout their lives. 
-
-### Study Objectives
-
-We constructed two-dimensional models of peristalsis in a heart tube which drive flow through a closed racetrack circulatory system. We then constructed a surrogate to replace the full input space of the CFD model using gPC expansion. Using sensitivity analysis, we explore the interactive effects on performance outputs (flow in the system, work, and cost of transport) of morphology, kinematics, and size through three input parameters: the dimensionless Womersley number $Wo$  (eq. \ref{Wo}), compression ratio of the tube $CR$, and compression frequency $f$ with constant wave speed. Based on these results, we make conclusions about the diversity of these parameters in extant groups of animals with peristaltically driven circulatory flow.
+- add spatial thematic mapping by state, by county, by census tract, and possibly by census block.
 
 ## Results
 
-```{r grid-fig, echo=FALSE, fig.cap="Racetrack model showing adaptive meshing. Full racetrack showing the $R_{top}$ and $R_{bot}$ used to generate prescribed motion in red and adaptive meshing of domain: roughest mesh (32 x 32 grid) in dark blue, intermediate mesh (16 x 16 grid) in teal, and finest mesh (8 x 8 grid) in gold, black box highlights inset a. Inset a: close up of region including part of the tube and racetrack showing meshes, black box highlights inset b. Inset b: close up of tube showing relation of finest mesh and target points of the racetrack. ", out.width = '100%'}
+```{r la6-wide-fig, echo=FALSE, fig.num=1, fig.cap="The non-3NF (wide) input of hurricane losses of the 6 parishes around New Orleans, LA by census tract, by return period. ", out.width = '100%'}
+knitr::include_graphics("../fig/LA6Input.png")
+```
+
+
+
+- The *LA6* hurricane loss dataset is an almost complete dataset with no blanks/missing data, because it is based on Census Tracts (CT) which are almost certainly guaranteed to contain a non-enpty Census Blocks (CB) in terms of building exposure. Such completeness makes LA6 easy to compute the AAL utilizing the Rietmann sums numerical integration.  (Fig. \ref{fig:la6-wide-fig}1)
+
+```{r nola-wide-fig, echo=FALSE, fig.num=2, fig.cap="The wide input of flood losses of the city of New Orleans, LA at a much finer level by census block, by return period shows the scarcity in the loss matrix. These misses require dynamic range computations that proved to be difficult to accomplish for the duration of CS-510 and thus have been left out.", out.width = '100%'}
+knitr::include_graphics("../fig/NOLAInput.png")
+```
+
+
+- The *NOLA* flood loss dataset is sparse as compared to the *LA6* hurricane loss one. Considering such sparsity and ensuing consequent complexity of dynamic range numerical integration using the Rietmann sums the development of AAL methodology for NOLA dataset is considered out-of-scope for the purposes of CS-510. (Fig. \ref{fig:nola-wide-fig}2)
+
+
+
+```{r all-rp-fig, echo=FALSE, fig.num=3, fig.cap="A violin log plot of the hurricane losses of the 6 parishes around New Orleans, LA by return period. The Aveage Annualized Loss (AAL) is labeled with 0. ", out.width = '100%'}
 knitr::include_graphics("../fig/Rplot.png")
 ```
 
-The elastic region had a 4:1 length:diameter ratio  with the inner 3/4 of the tube length consisting of points tethered to target points, which drove the preferred peristaltic motion (Fig. \ref{fig:grid-fig}). The rest of the racetrack were tethered to target points which remained still throughout the simulations. Target point stiffness ($k_{targ}$) was chosen as 30.0 to remain consistent with the model.
-
-The force equation used to drive peristalsis in the model is: 
-\begin{equation}
-\mathbf{f}(r,t) = k_{targ}(\mathbf{Y}(r,t) - \mathbf{X}(r,t))
-\label{eq:f}
-\end{equation}
-where $\mathbf{Y}(r,t)$ is the preferred position of the boundary. Only the preferred motion of the boundary in each model of peristalsis differed. Each model of driving peristalsis is described below. 
-
-#### Opposing sine-wave peristalsis model
-
-The sine-wave model defines the motion of the boundary as two opposing sine waves:
-\begin{equation}
-y_{top,bot} = R_{top,bot} \pm A \sin(2\pi f t+ 2\pi cx_t)
-\label{eq:sinewaves}
-\end{equation} 
-where $f$ is the compression frequency, $c$ is the compression-wave speed (held constant throughout the study at a non-dimensional speed of 3.0), $A$ is the amplitude of the contraction, and $x_t$ is the horizontal distance from the beginning of the prescribed motion section. The compression ratio gives the percent occlusion and is equal to $2A$. The peristaltic waves created by Eq.~\ref{eq:sinewaves} propagated from left to right, therefore driving fluid flow counter-clockwise in the lumen of the racetrack. The stiffness of the boundary and target point stiffness ($k_{targ}=30.0$) allowed for very little independent elastic motion in the peristaltic region of the tube.
-
-#### Opposing Gaussian-peak peristalsis model
-
-The pinch model defines the motion of the boundary as two sharp, Gaussian peaks, with the remainder of the boundary being free to flex with little restriction by the target points: 
-\begin{equation}
-y_{top,bot} = R_{top,bot} \pm A\exp((-0.5(x_t-\gamma)/\sigma)^2)
-\label{eq:gaussianwaves}
-\end{equation}
-Where $\gamma$ is the position of the pinch on the x-axis of the center of the tube and $\sigma$ is the width of the pinch. The pinch was advanced by altering $\gamma$ depending on the time step of the simulation. For the points within the region of the Gaussian wave, the target point stiffness was chosen to be extremely stiff ($k_{targ}=2500$) so that the target points adhered closely to the programmed waveform. Outside the peak region, the target points were tethered very loosely ($k_{targ}=0.7$) with a spring constant about two orders of magnitude stiffer to allow for elastic interactions between fluid and the heart tube.
-
-
-### Analysis of Flow and Pressure Fields
-
-Several calculations of non-dimensional fluid flow and pressure were made for each simulation in *R* [@R:2011]. Positive flow speeds indicate fluid motion in the counter-clockwise direction in the racetrack, the same direction as the traveling peristaltic wave. All values presented in the analysis are dimensionless, and more information about nondimensionalizing values can be found in the supplemental information to this paper. 
-
-At each time step in the simulation, the magnitude of dimensionless fluid velocity was recorded and then spatially averaged across each area to find $|\mathbf{u'}|$ across four rigid sections of the racetrack: the upper position, a connecting vertical position, the inflow region (vena cava) and outflow region (aorta). The mean speeds $|\mathbf{u'}|$ were then temporally averaged to find the average flow speed across each simulation ($U_{avg}$). The maximum value of flow speed, $\mathbf{u'_{m}}$, was also taken at each time step, and the maximum of these in a simulation represents the peak flow speed ($U_{peak}$). 
-
-Non-dimensional pressure was also recorded for each time step of the simulation and spatially averaged at each time step near the inflow area (vena cava position) and the outflow area (aorta position) of the elastic region. For each simulation, the vena cava and aorta positions' pressures were averaged temporally to find $p_{in}$ and $p_{out}$, respectively. Each inflow pressure was subtracted from the outflow pressure at each time step to find their difference, and these differences were averaged over simulation time to find $\Delta P$. 
-
-
-
-
+- Visibly, the AAL are between 10~ and 20-year return period losses. (Fig. \ref{fig:all-rp-fig}3). 
 
 ## FAQ 
 

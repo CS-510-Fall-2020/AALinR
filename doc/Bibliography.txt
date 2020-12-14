@@ -1,3 +1,35 @@
+R-markdown tags
+subscript $R_{top}$ and $R_{bot}$ $U_{avg}$
+modulus   $|\mathbf{u'}|$
+UC delta  $\Delta P$
+lc sigma  $\sigma$
+lc gamma  $\gamma$
+approximately $Wo\approx1$
+eq ref    eq. \ref{Wo}
+
+\begin{equation}
+Wo = d\sqrt{\frac{f \rho}{\mu}},
+\label{Wo}
+\end{equation}
+
+
+\begin{equation}
+\mathbf{f}(r,t) = k_{targ}(\mathbf{Y}(r,t) - \mathbf{X}(r,t))
+\label{eq:f}
+\end{equation}
+
+\begin{equation}
+y_{top,bot} = R_{top,bot} \pm A\exp((-0.5(x_t-\gamma)/\sigma)^2)
+\label{eq:gaussianwaves}
+\end{equation}
+
+\begin{equation}
+y_{top,bot} = R_{top,bot} \pm A \sin(2\pi f t+ 2\pi cx_t)
+\label{eq:sinewaves}
+\end{equation} 
+
+
+
 References & Bibliography 
 
 @article{HazCan:2013,
