@@ -5,10 +5,13 @@
 #                   Niko Todorov                        #
 #                                                       #
 #########################################################
-install.packages("tidyr")
-install.packages("ggplot2")
-install.packages("ggthemes")
-install.packages("maps")
+# peer-review suggestion by TT
+packages<-c("tidyr","ggplot2","ggthemes","maps")
+install.packages(setdiff(packages, rownames(installed.packages())))
+# install.packages("tidyr")
+# install.packages("ggplot2")
+# install.packages("ggthemes")
+# install.packages("maps")
 library(tidyr)
 library(ggplot2)
 library(ggthemes)
